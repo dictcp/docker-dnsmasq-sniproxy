@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  dnsmasq:
+    ports:
+      - '53:53/udp'
+      - '53:53'
+    restart: always
+    build: . 
+    command: dnsmasq --no-daemon -C /etc/dnsmasq.conf
+    volumes:
+      - ./dnsmasq.conf:/etc/dnsmasq.conf
+  sniproxy:
+    ports:
+      - '80:80'
+      - '443:443'
+    restart: always
+    build: . 
+    command: sniproxy -f -c /etc/sniproxy.conf
+    volumes:
+      - ./sniproxy.conf:/etc/sniproxy.conf
+
